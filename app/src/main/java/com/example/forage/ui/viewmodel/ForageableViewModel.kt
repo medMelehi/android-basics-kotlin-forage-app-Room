@@ -27,8 +27,8 @@ import kotlinx.coroutines.launch
  */
 
 class ForageableViewModel(
-    private val  forageableDao: ForageableDao
-): ViewModel() {
+    private val forageableDao: ForageableDao
+) : ViewModel() {
 
     val forageables: LiveData<List<Forageable>> = forageableDao.getForageables().asLiveData()
 
@@ -67,13 +67,14 @@ class ForageableViewModel(
             notes = notes
         )
         viewModelScope.launch(Dispatchers.IO) {
-        forageableDao.update(forageable)
+            forageableDao.update(forageable)
         }
     }
 
     fun deleteForageable(forageable: Forageable) {
         viewModelScope.launch(Dispatchers.IO) {
-        forageableDao.delete(forageable)        }
+            forageableDao.delete(forageable)
+        }
     }
 
     fun isValidEntry(name: String, address: String): Boolean {
@@ -81,7 +82,8 @@ class ForageableViewModel(
     }
 }
 
-class ForageableViewModelFactory(private val forageableDao: ForageableDao) : ViewModelProvider.Factory {
+class ForageableViewModelFactory(private val forageableDao: ForageableDao) :
+    ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ForageableViewModel::class.java)) {
